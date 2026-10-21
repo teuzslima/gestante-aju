@@ -57,3 +57,12 @@ export function nomeTrimestre(trimestre: 1 | 2 | 3): string {
 export function formatarData(d: Date): string {
   return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
 }
+
+/**
+ * Dias de hoje até uma data "AAAA-MM-DD".
+ * Positivo = no futuro; 0 = hoje; negativo = no passado (atrasado).
+ */
+export function diasAteData(dataISO: string, hoje: Date = new Date()): number {
+  const [ano, mes, dia] = dataISO.split("-").map(Number);
+  return diffDias(hoje, new Date(ano, mes - 1, dia));
+}

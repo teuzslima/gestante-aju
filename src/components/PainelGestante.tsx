@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { calcularGestacao, formatarData, nomeTrimestre } from "@/lib/gestacao";
+import { calcularGestacao, diasAteData, formatarData, nomeTrimestre } from "@/lib/gestacao";
+import { AVISO_CONTEUDO, conteudoDaSemana } from "@/lib/conteudo";
 import { adicionarEvento, alternarEvento, sair, salvarDum } from "@/app/gestante/actions";
 
 export type EventoRow = {
@@ -29,6 +30,19 @@ export default function PainelGestante({
     if (!ano || !mes || !dia) return null;
     return calcularGestacao(new Date(ano, mes - 1, dia));
   }, [dumLocal]);
+
+  const lembretes = useMemo(() => {
+    const pendentes = eventos
+      .filter((e) => e.status !== "concluido")
+      .map((e) => ({ ...e, dias: diasAteData(e.data) }))
+      .sort((a, b) => a.dias - b.dias);
+    return {
+      proximo: pendentes.find((e) => e.dias >= 0) ?? null,
+      atrasados: pendentes.filter((e) => e.dias < 0),
+    };
+  }, [eventos]);
+
+  const conteudo = info ? conteudoDaSemana(info.semanas) : null;
 
   const R = 52;
   const C = 2 * Math.PI * R;
@@ -88,6 +102,55 @@ export default function PainelGestante({
             Informe a data da sua última menstruação para começar a acompanhar.
           </p>
         </section>
+      )}
+
+      {/* Lembretes */}
+      {(lembretes.proximo || lembretes.atrasados.length > 0) && (
+        <section className="rounded-2xl bg-superficie p-4 shadow-sm">
+          <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-tinta-suave">
+            Lembretes
+          </h2>
+          {lembretes.proximo && (
+            <p className="text-sm">
+              🔔 Próxima {lembretes.proximo.tipo === "exame" ? "exame" : "consulta"}:{" "}
+              <strong>{lembretes.proximo.titulo}</strong> —{" "}
+              {lembretes.proximo.dias === 0
+                ? "hoje"
+                : `em ${lembretes.proximo.dias} ${lembretes.proximo.dias === 1 ? "dia" : "dias"}`}
+            </p>
+          )}
+          {lembretes.atrasados.map((a) => (
+            <p key={a.id} className="mt-1 text-sm text-rosa-escuro">
+              ⚠️ Atrasado: {a.titulo} (há {Math.abs(a.dias)}{" "}
+              {Math.abs(a.dias) === 1 ? "dia" : "dias"})
+            </p>
+          ))}
+        </section>
+      )}
+
+      {/* Dicas do trimestre */}
+      {conteudo && (
+        <details className="rounded-2xl bg-superficie p-4 shadow-sm">
+          <summary className="cursor-pointer text-sm font-semibold">
+            💡 Dicas do seu trimestre
+          </summary>
+          <div className="mt-3 flex flex-col gap-2 text-sm">
+            <p className="font-medium">{conteudo.titulo}</p>
+            <p className="text-tinta-suave">{conteudo.resumo}</p>
+            <ul className="list-disc pl-5 text-tinta-suave">
+              {conteudo.dicas.map((d) => (
+                <li key={d}>{d}</li>
+              ))}
+            </ul>
+            <p className="font-medium">Exames comuns</p>
+            <ul className="list-disc pl-5 text-tinta-suave">
+              {conteudo.exames.map((e) => (
+                <li key={e}>{e}</li>
+              ))}
+            </ul>
+            <p className="mt-1 text-xs text-tinta-suave">{AVISO_CONTEUDO}</p>
+          </div>
+        </details>
       )}
 
       {/* Salvar DUM */}

@@ -42,7 +42,8 @@ acompanha quem precisa de atenção. Duas plataformas: **app da gestante** e **p
 ### Funcionalidades
 
 - 📈 **Idade gestacional** calculada a partir da DUM (semanas/dias, trimestre, DPP, dias restantes)
-- 🗓️ **Consultas e exames** do pré-natal e **checklist** de acompanhamento
+- 🗓️ **Consultas e exames** do pré-natal com **lembretes** (próximos e atrasados)
+- 💡 **Conteúdo educativo** por trimestre (dicas e exames esperados)
 - 🔐 **Papéis `gestante`/`gestor`** com **Row-Level Security** no banco (cada gestante só vê o seu)
 - 📱 **PWA** instalável, design acolhedor e mobile-first
 - ✅ **Teste automatizado** da regra gestacional + **CI** (lint, types, testes, build)
@@ -69,7 +70,8 @@ Outros scripts: `npm test` · `npm run typecheck` · `npm run lint` · `npm run 
 - [x] **Autenticação (Supabase Auth)** — login/cadastro, sessão via `proxy.ts`
 - [x] **Persistência com RLS** — DUM e consultas/exames salvos por gestante (Server Actions)
 - [x] **Painel do gestor** — lista de gestantes, progresso e sinalização de quem precisa de atenção
-- [ ] Notificações/lembretes e conteúdo educativo por trimestre
+- [x] **Lembretes** (próxima consulta/exame e atrasados) e **conteúdo educativo** por trimestre
+- [ ] Notificações push (service worker) e exportação do cartão da gestante
 
 ### Autenticação & dados
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calcularGestacao, DIAS_GESTACAO } from "./gestacao";
+import { calcularGestacao, diasAteData, DIAS_GESTACAO } from "./gestacao";
 
 describe("calcularGestacao", () => {
   it("DUM há 70 dias → 10 semanas e 0 dias (1º trimestre)", () => {
@@ -40,5 +40,14 @@ describe("calcularGestacao", () => {
     const g = calcularGestacao(dum, antes);
     expect(g.semanas).toBe(0);
     expect(g.progresso).toBe(0);
+  });
+});
+
+describe("diasAteData", () => {
+  it("futuro é positivo, hoje é zero, passado é negativo", () => {
+    const hoje = new Date(2026, 0, 10);
+    expect(diasAteData("2026-01-15", hoje)).toBe(5);
+    expect(diasAteData("2026-01-10", hoje)).toBe(0);
+    expect(diasAteData("2026-01-05", hoje)).toBe(-5);
   });
 });
