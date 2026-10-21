@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Design System — Gestante Aju (paleta maternal, acolhedora)          */
+/* ------------------------------------------------------------------ */
+@theme {
+  --color-rosa: #d1577e;
+  --color-rosa-escuro: #b03e63;
+  --color-rosa-claro: #fbe9ef;
+  --color-verde: #5e9e8f;
+  --color-verde-claro: #e6f2ef;
+  --color-creme: #fbf4f1;
+  --color-superficie: #ffffff;
+  --color-tinta: #2a2a33;
+  --color-tinta-suave: #6b6b76;
+  --color-borda: #f0e6e2;
+
+  --font-sans: var(--font-poppins), system-ui, -apple-system, sans-serif;
+
+  --radius-card: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-creme);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}

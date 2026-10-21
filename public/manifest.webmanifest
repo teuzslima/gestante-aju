@@ -1,0 +1,10 @@
+{
+  "name": "Gestante Aju",
+  "short_name": "Gestante Aju",
+  "description": "Acompanhamento pré-natal para gestantes de Aracaju.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf4f1",
+  "theme_color": "#d1577e",
+  "icons": []
+}

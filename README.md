@@ -5,76 +5,107 @@
 **App de acompanhamento pré-natal para gestantes atendidas pela Prefeitura de Aracaju**
 *Prenatal-care companion app for expectant mothers served by the city of Aracaju*
 
-![Prêmio](https://img.shields.io/badge/🥇_1º_lugar-DemoDay_Unit_2026-FFD700)
-![Tema](https://img.shields.io/badge/tema-Governança_Digital_de_Aracaju-0D21A1)
-![Status](https://img.shields.io/badge/status-protótipo_premiado-5E807F)
+![1º lugar](https://img.shields.io/badge/🥇_1º_lugar-DemoDay_Unit-FFD700)
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-Auth_·_DB_·_RLS-3ECF8E?logo=supabase&logoColor=white)
+![CI](https://github.com/teuzslima/gestante-aju/actions/workflows/ci.yml/badge.svg)
 
 [**Português**](#-português) · [**English**](#-english)
 
 </div>
 
-> 🏆 **1º lugar no DemoDay da Universidade Tiradentes (Unit)** — desafio *“Governança Digital
-> da Prefeitura de Aracaju”*, entre **36 equipes**. Projeto desenvolvido na **Residência
-> Tecnológica** (Unit × Porto Digital × Sebrae).
-> 📰 [Matéria oficial da Unit](https://portal.unit.br/blog/noticias/demo-day-desafia-calouros-de-ti-a-criarem-solucoes-para-a-governanca-digital-de-aracaju/)
+> 🏆 **1º lugar no DemoDay da Universidade Tiradentes (Unit)** — desafio *“Governança Digital da
+> Prefeitura de Aracaju”*, entre **36 equipes**. Este repositório leva o protótipo premiado a um
+> **app funcional**. · [📰 Matéria da Unit](https://portal.unit.br/blog/noticias/demo-day-desafia-calouros-de-ti-a-criarem-solucoes-para-a-governanca-digital-de-aracaju/)
+
+<div align="center">
+
+<img src="docs/landing.jpg" alt="Tela inicial do Gestante Aju" width="260" />
+&nbsp;&nbsp;
+<img src="docs/gestante.jpg" alt="Painel da gestante com a semana gestacional" width="260" />
+
+<sub>📷 Telas atuais · _adicione aqui o link do deploy (Vercel) quando publicar._</sub>
+
+</div>
 
 ---
 
 ## 🇧🇷 Português
 
-### O problema
+### Sobre
 
-O acompanhamento pré-natal é **longo e fragmentado**: envolve muitas consultas, exames e
-documentos, e nem todo o público é alcançado pelos serviços digitais da Prefeitura. Faltava
-uma forma simples da gestante organizar sua jornada — e de a gestão de saúde acompanhar isso.
+Aplicativo **mobile-first** que descomplica o pré-natal: reúne consultas, exames e orientações num
+só lugar e coloca a gestante no comando da própria saúde — enquanto a equipe de saúde da Prefeitura
+acompanha quem precisa de atenção. Duas plataformas: **app da gestante** e **painel do gestor**.
 
-### A solução
+### Funcionalidades
 
-**Gestante Aju** descomplica o pré-natal reunindo tudo em um só lugar, em **duas plataformas**:
+- 📈 **Idade gestacional** calculada a partir da DUM (semanas/dias, trimestre, DPP, dias restantes)
+- 🗓️ **Consultas e exames** do pré-natal e **checklist** de acompanhamento
+- 🔐 **Papéis `gestante`/`gestor`** com **Row-Level Security** no banco (cada gestante só vê o seu)
+- 📱 **PWA** instalável, design acolhedor e mobile-first
+- ✅ **Teste automatizado** da regra gestacional + **CI** (lint, types, testes, build)
 
-- 📱 **App da gestante** — consultas, exames e documentos organizados, lembretes e orientações,
-  colocando a gestante num papel **mais ativo** no cuidado da própria saúde.
-- 🩺 **Painel dos gestores de saúde** — acompanhamento das pacientes pela equipe da Prefeitura,
-  para enxergar e apoiar quem precisa.
+### Stack
 
-### Destaques
+**Next.js 16 (App Router)** · **React 19** · **TypeScript** · **Tailwind CSS v4** · **Supabase**
+(Auth + PostgreSQL com **RLS**) · **Zod** · **Vitest** · **GitHub Actions**.
 
-- 🎯 Foco em **saúde materna** e em um público pouco alcançado pelos serviços digitais
-- 🧩 Solução de **governança digital** nascida de uma demanda real da Prefeitura de Aracaju
-- 🥇 **1º lugar** entre 36 equipes no DemoDay (banca com Prefeitura e ecossistema de inovação)
-- 👥 Projeto em **equipe**, metodologia de **ideação e prototipação**
+### Como rodar
 
-> 🎨 *Protótipo/conceito premiado. Telas e protótipo podem ser adicionados aqui.*
+```bash
+npm install
+cp .env.example .env.local     # preencha com o seu projeto Supabase
+# rode supabase/schema.sql no SQL Editor do Supabase (cria tabelas + RLS)
+npm run dev                    # http://localhost:3000
+```
+
+Outros scripts: `npm test` · `npm run typecheck` · `npm run lint` · `npm run build`.
+
+### Roadmap
+
+- [x] Idade gestacional (regra + testes) e painel da gestante
+- [ ] Autenticação (Supabase) e persistência das consultas/exames
+- [ ] Painel do gestor (lista de gestantes + sinalização)
+- [ ] Notificações/lembretes e conteúdo educativo por trimestre
 
 ---
 
 ## 🇺🇸 English
 
-### The problem
+### About
 
-Prenatal care is **long and fragmented** — many appointments, exams and documents — and not
-every audience is reached by the city's digital services. Expectant mothers lacked a simple way
-to organize their journey, and health managers lacked visibility into it.
+A **mobile-first** app that simplifies prenatal care: it brings appointments, exams and guidance
+together and puts the mother in charge of her own health — while the city's health team follows up
+on who needs attention. Two platforms: a **patient app** and a **manager dashboard**.
 
-### The solution
+### Features
 
-**Gestante Aju** simplifies prenatal care by bringing everything together across **two platforms**:
+- 📈 **Gestational age** computed from the LMP (weeks/days, trimester, due date, days left)
+- 🗓️ Prenatal **appointments & exams** and a follow-up **checklist**
+- 🔐 **`patient`/`manager` roles** with database **Row-Level Security** (each patient sees only her own data)
+- 📱 Installable **PWA**, warm mobile-first design
+- ✅ **Automated test** for the gestational rule + **CI** (lint, types, tests, build)
 
-- 📱 **Patient app** — appointments, exams and documents in one place, with reminders and
-  guidance, giving the mother a **more active role** in her own care.
-- 🩺 **Health-manager dashboard** — lets the city's team follow patients and support those in need.
+### Stack
 
-### Highlights
+**Next.js 16 (App Router)** · **React 19** · **TypeScript** · **Tailwind CSS v4** · **Supabase**
+(Auth + PostgreSQL with **RLS**) · **Zod** · **Vitest** · **GitHub Actions**.
 
-- 🎯 Focused on **maternal health** and an audience underserved by digital services
-- 🧩 A **digital-governance** solution born from a real need of the Aracaju city hall
-- 🥇 **1st place** among 36 teams at DemoDay (panel with city officials and the innovation ecosystem)
-- 👥 **Team** project, **ideation & prototyping** methodology
+### Getting started
+
+```bash
+npm install
+cp .env.example .env.local     # fill in your Supabase project
+# run supabase/schema.sql in the Supabase SQL Editor (tables + RLS)
+npm run dev                    # http://localhost:3000
+```
 
 ---
 
 <div align="center">
 
-🥇 DemoDay Unit 2026 · Desenvolvido por **[@teuzslima](https://github.com/teuzslima)** e equipe
+🥇 DemoDay Unit · Desenvolvido por **[@teuzslima](https://github.com/teuzslima)** e equipe
 
 </div>
