@@ -54,6 +54,15 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
+-- Sinalização do gestor: marca uma gestação que precisa de atenção.
+create table if not exists public.sinalizacoes (
+  id          uuid primary key default gen_random_uuid(),
+  gestacao_id uuid not null unique references public.gestacoes (id) on delete cascade,
+  gestor_id   uuid not null references public.profiles (id) on delete cascade,
+  nota        text,
+  criado_em   timestamptz not null default now()
+);
+
 -- ----------------------------------------------------------------------
 -- Helper: o usuário atual é gestor?
 -- ----------------------------------------------------------------------
@@ -72,9 +81,10 @@ $$;
 -- ----------------------------------------------------------------------
 -- RLS
 -- ----------------------------------------------------------------------
-alter table public.profiles  enable row level security;
-alter table public.gestacoes enable row level security;
-alter table public.eventos   enable row level security;
+alter table public.profiles     enable row level security;
+alter table public.gestacoes    enable row level security;
+alter table public.eventos      enable row level security;
+alter table public.sinalizacoes enable row level security;
 
 -- profiles: cada um vê/edita o seu; gestor vê todos.
 create policy "profiles_select_self_or_gestor" on public.profiles
@@ -97,3 +107,12 @@ create policy "eventos_owner_all" on public.eventos
   with check (exists (select 1 from public.gestacoes g where g.id = gestacao_id and g.gestante_id = auth.uid()));
 create policy "eventos_gestor_select" on public.eventos
   for select using (public.is_gestor());
+
+-- sinalizacoes: o gestor cria/remove; a gestante vê as da própria gestação.
+create policy "sinalizacoes_gestor_all" on public.sinalizacoes
+  for all
+  using (public.is_gestor())
+  with check (public.is_gestor() and gestor_id = auth.uid());
+create policy "sinalizacoes_gestante_select" on public.sinalizacoes
+  for select
+  using (exists (select 1 from public.gestacoes g where g.id = gestacao_id and g.gestante_id = auth.uid()));

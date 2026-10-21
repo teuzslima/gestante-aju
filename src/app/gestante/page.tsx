@@ -19,9 +19,12 @@ export default async function GestantePage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("nome")
+    .select("nome, papel")
     .eq("id", user.id)
     .maybeSingle();
+
+  // Gestor usa o painel de acompanhamento, não a tela da gestante.
+  if (profile?.papel === "gestor") redirect("/gestor");
 
   const { data: gestacao } = await supabase
     .from("gestacoes")

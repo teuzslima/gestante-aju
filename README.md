@@ -68,7 +68,7 @@ Outros scripts: `npm test` · `npm run typecheck` · `npm run lint` · `npm run 
 - [x] Idade gestacional (regra + testes) e painel da gestante
 - [x] **Autenticação (Supabase Auth)** — login/cadastro, sessão via `proxy.ts`
 - [x] **Persistência com RLS** — DUM e consultas/exames salvos por gestante (Server Actions)
-- [ ] Painel do gestor (lista de gestantes + sinalização)
+- [x] **Painel do gestor** — lista de gestantes, progresso e sinalização de quem precisa de atenção
 - [ ] Notificações/lembretes e conteúdo educativo por trimestre
 
 ### Autenticação & dados
@@ -78,6 +78,12 @@ trigger. A DUM e os eventos (consultas/exames) são gravados com **Server Action
 protegidos por **RLS**: cada gestante só acessa os próprios dados; o papel `gestor`
 tem leitura das pacientes. Para um teste rápido, desative a confirmação de e-mail em
 *Supabase → Authentication → Providers → Email*.
+
+Para transformar um usuário em **gestor** (acessa o painel `/gestor`), rode no SQL Editor:
+
+```sql
+update public.profiles set papel = 'gestor' where id = '<auth-uuid-do-usuario>';
+```
 
 ---
 
