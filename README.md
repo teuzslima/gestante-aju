@@ -66,9 +66,18 @@ Outros scripts: `npm test` · `npm run typecheck` · `npm run lint` · `npm run 
 ### Roadmap
 
 - [x] Idade gestacional (regra + testes) e painel da gestante
-- [ ] Autenticação (Supabase) e persistência das consultas/exames
+- [x] **Autenticação (Supabase Auth)** — login/cadastro, sessão via `proxy.ts`
+- [x] **Persistência com RLS** — DUM e consultas/exames salvos por gestante (Server Actions)
 - [ ] Painel do gestor (lista de gestantes + sinalização)
 - [ ] Notificações/lembretes e conteúdo educativo por trimestre
+
+### Autenticação & dados
+
+Login com e-mail/senha (Supabase Auth). Ao cadastrar, um `profile` é criado por
+trigger. A DUM e os eventos (consultas/exames) são gravados com **Server Actions** e
+protegidos por **RLS**: cada gestante só acessa os próprios dados; o papel `gestor`
+tem leitura das pacientes. Para um teste rápido, desative a confirmação de e-mail em
+*Supabase → Authentication → Providers → Email*.
 
 ---
 
